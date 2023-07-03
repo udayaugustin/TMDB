@@ -402,4 +402,36 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
+    <Style TargetType="TabBar">
+        <Setter Property="Shell.TabBarBackgroundColor"
+            Value="{StaticResource TabBarBackground}" />
+        <Setter Property="Shell.TabBarTitleColor"
+            Value="{StaticResource White}" />
+        <Setter Property="Shell.TabBarUnselectedColor"
+            Value="Red" />
+        <Setter Property="Shell.TabBarForegroundColor"
+                Value="Green"/>
+        
+        <!--<Setter Property="Shell.TabBarTitleColor"
+                Value="Yellow"/>-->
+    </Style>
+
+    <Style TargetType="Button" x:Key="TabButton">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="FontFamily" Value="FA"/>
+        <Setter Property="FontSize" Value="32"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource TabBarBackground}"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="ListTitle">
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="Margin" Value="0,5,0,0"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="ListDescription">
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="VerticalTextAlignment" Value="End"/>
+        <Setter Property="Margin" Value="0,0,0,5"/>
+    </Style>
 </ResourceDictionary>

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Markup;
+using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Compatibility.Hosting;
 using TMDB.ViewModels;
 
 namespace TMDB;
@@ -10,11 +13,14 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.RegisterViewModels()
+            .UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkitMarkup()
+            .RegisterViewModels()			
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("fa-solid-900.ttf", "FA");
 			});
 
 #if DEBUG

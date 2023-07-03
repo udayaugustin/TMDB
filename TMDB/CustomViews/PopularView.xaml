@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TMDB.CustomViews.PopularView"
+             Padding="10">
+    <CollectionView x:Name="collectionView"
+                    Background="{StaticResource White}"
+                    SelectionMode="Single"
+                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Border Stroke="{StaticResource TabBarBackground}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10"
+                        Margin="0,0,0,10">
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10"
+                        BackgroundColor="{StaticResource TabBarBackground}">
+                        <Image Source="{Binding PosterPath}" HeightRequest="60" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
+
+                        <Label Text="{Binding Title}" Style="{StaticResource ListTitle}" Grid.Row="0" Grid.Column="1"/>
+                        <Label Text="Action, Thirller" Style="{StaticResource ListDescription}" Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentView>

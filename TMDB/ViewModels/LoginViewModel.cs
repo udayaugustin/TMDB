@@ -17,9 +17,9 @@ namespace TMDB.ViewModels
         string password;
 
         [RelayCommand]
-        public void Login()
+        public async void Login()
         {
-            var t = this.username;
+            await Shell.Current.GoToAsync("///dashboard");
         }
     }
 }
