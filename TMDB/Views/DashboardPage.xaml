@@ -15,7 +15,7 @@
         <cv:PopularView ItemsSource="{Binding Movies}" SelectionCommand="{Binding NavigateToDetailCommand}" Grid.Row="0"/>
 
 
-        <Grid Grid.Row="1" BackgroundColor="{StaticResource TabBarBackground}">
+        <!--<Grid Grid.Row="1" BackgroundColor="{StaticResource TabBarBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -27,6 +27,8 @@
             <StackLayout Grid.Column="1">
                 <Button Text="&#xf005;" Style="{StaticResource TabButton}" Clicked="Button_Clicked"/>
             </StackLayout>
-        </Grid>
+        </Grid>-->
+
+        <cv:CustomTabView Grid.Row="1" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}"/>
     </Grid>
 </ContentPage>

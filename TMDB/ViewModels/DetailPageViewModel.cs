@@ -7,12 +7,12 @@ namespace TMDB.ViewModels
 {
     public partial class DetailPageViewModel : ObservableObject, IQueryAttributable
     {
-        private readonly IRestClient restClient;        
+        private readonly IHttpClient restClient;        
 
         [ObservableProperty]
         Movie movie;        
 
-        public DetailPageViewModel(IRestClient restClient)
+        public DetailPageViewModel(IHttpClient restClient)
         {            
             this.restClient = restClient;            
         }

@@ -1,38 +1,63 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using TMDB.CustomViews;
 using TMDB.Helpers;
 using TMDB.Interfaces;
 using TMDB.Models;
 
 namespace TMDB.ViewModels
 {
-    public partial class DashboardPageViewModel : ObservableObject
+    public partial class DashboardPageViewModel : ObservableObject, IQueryAttributable
     {
-        private readonly IRestClient restClient;
+        private readonly IHttpClient restClient;
         private Dictionary<int, string> genreMap = new Dictionary<int, string>();
+        private IEnumerable<Movie> popularMovies;
+        private IEnumerable<Movie> trendingMovies;
 
         [ObservableProperty]
         IEnumerable<Movie> movies;
 
         [ObservableProperty]
-        IEnumerable<Genre> genres;        
+        IEnumerable<Genre> genres;
 
-        public DashboardPageViewModel(IRestClient restClient)
+        [ObservableProperty]
+        ObservableCollection<TabViewItem> tabs;
+
+        [ObservableProperty]
+        TabViewItem selectedTab;
+
+        public DashboardPageViewModel(IHttpClient httpClient)
         {
-            this.restClient = restClient;
-
+            this.restClient = httpClient;            
             Initilaize();            
         }
 
         private async Task Initilaize()
         {
+            Tabs = new ObservableCollection<TabViewItem>
+            {
+                new TabViewItem { Title = "Popular", Command = new Command(ShowPopularList)},
+                new TabViewItem { Title = "Trending", Command = new Command(ShowTrendingList)},
+            };
+
             await GetGenres();
             await GetPopularMovies();
+            await GetTrendingMovies();
+            Movies = popularMovies;
+            SelectedTab = Tabs.FirstOrDefault();
+        }
+
+        private void ShowTrendingList(object obj)
+        {
+            Movies = trendingMovies;
+            SelectedTab = Tabs.LastOrDefault();
+        }
+
+        private void ShowPopularList(object obj)
+        {
+            Movies = popularMovies;
+            SelectedTab = Tabs.FirstOrDefault();
         }
 
         private async Task GetGenres()
@@ -46,9 +71,23 @@ namespace TMDB.ViewModels
         private async Task GetPopularMovies()
         {
             var response = await restClient.GetAsync<MovieListResponse>($"{Constants.BaseUrl}/movie/popular");
-            Movies = response.Results;
+            popularMovies = response.Results;
 
-            foreach(var movie in Movies)
+            foreach(var movie in popularMovies)
+            {
+                List<string> genresNames = movie.GenreIds.Select(gid => genreMap.GetValueOrDefault(gid))
+                    .ToList();
+
+                movie.GenreNames = string.Join(", ", genresNames);
+            }
+        }
+
+        private async Task GetTrendingMovies()
+        {
+            var response = await restClient.GetAsync<MovieListResponse>($"{Constants.BaseUrl}/trending/movie/day");
+            trendingMovies = response.Results;
+
+            foreach (var movie in trendingMovies)
             {
                 List<string> genresNames = movie.GenreIds.Select(gid => genreMap.GetValueOrDefault(gid))
                     .ToList();
@@ -64,7 +103,13 @@ namespace TMDB.ViewModels
             {
                 { "movieId", (movie as Movie).Id }
             };
+            
             await Shell.Current.GoToAsync("///detailview", navigationParameter);
-        }        
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            
+        }
     }
 }

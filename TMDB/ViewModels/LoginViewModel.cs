@@ -1,10 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TMDB.Helpers;
 using TMDB.Interfaces;
 using TMDB.Models;
@@ -13,7 +8,7 @@ namespace TMDB.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
-        private readonly IRestClient restClient;
+        private readonly IHttpClient httpClient;
 
         [ObservableProperty]
         string username;
@@ -21,17 +16,15 @@ namespace TMDB.ViewModels
         [ObservableProperty]
         string password;
 
-        public LoginViewModel(IRestClient restClient)
+        public LoginViewModel(IHttpClient httpClient)
         {
-            this.restClient = restClient;
+            this.httpClient = httpClient;            
         }
 
         [RelayCommand]
         public async Task Login()
         {
-            //await Shell.Current.GoToAsync("///dashboard");
-
-            var tokenResponse = await restClient.GetAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/token/new?api_key={Constants.ApiKey}");            
+            var tokenResponse = await httpClient.GetAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/token/new");            
 
             var body = new ValidateLogin
             {
@@ -39,10 +32,14 @@ namespace TMDB.ViewModels
                 Password = "Admin2011!@",
                 RequestToken = tokenResponse.RequestToken
             };
-            var validateLogin = await restClient.PostAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/token/validate_with_login?api_key={Constants.ApiKey}", body);
-            var session = await restClient.GetAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/session/new?api_key={Constants.ApiKey});
+            var validateLogin = await httpClient.PostAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/token/validate_with_login", body);
+
+            var sessionEndPoint = $"{Constants.BaseUrl}/authentication/session/new?request_token={validateLogin.RequestToken}";
+            var session = await httpClient.GetAsync<LoginSession>(sessionEndPoint);
+
+            await SecureStorage.SetAsync("SessionId", session.SessionId);
+
+            await Shell.Current.GoToAsync("///dashboard");
         }
-
-
     }
 }
