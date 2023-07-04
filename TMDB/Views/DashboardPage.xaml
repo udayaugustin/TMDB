@@ -6,9 +6,6 @@
              x:Class="TMDB.Views.DashboardPage"
              xmlns:vm="clr-namespace:TMDB.ViewModels"
              Title="DashboardPage">
-    <ContentPage.BindingContext>
-        <vm:DashboardPageViewModel/>
-    </ContentPage.BindingContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

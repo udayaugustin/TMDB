@@ -2,6 +2,8 @@
 using CommunityToolkit.Maui.Markup;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using TMDB.Interfaces;
+using TMDB.Services;
 using TMDB.ViewModels;
 
 namespace TMDB;
@@ -13,9 +15,10 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
-            .UseMauiCommunityToolkitMarkup()
-            .RegisterViewModels()			
+			.UseMauiCommunityToolkit()
+			.UseMauiCommunityToolkitMarkup()
+			.RegisterViewModels()
+			.RegisterServices()			
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -33,7 +36,16 @@ public static class MauiProgram
 	public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
 	{
 		mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
+        mauiAppBuilder.Services.AddSingleton<DetailPageViewModel>();
+        mauiAppBuilder.Services.AddSingleton<DashboardPageViewModel>();
 
-		return mauiAppBuilder;
+        return mauiAppBuilder;
 	}
+
+    public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
+    {
+		mauiAppBuilder.Services.AddSingleton<IRestClient, RestClientService>();
+
+        return mauiAppBuilder;
+    }
 }

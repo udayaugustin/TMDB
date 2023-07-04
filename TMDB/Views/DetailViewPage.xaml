@@ -2,11 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TMDB.Views.DetailViewPage"
+             xmlns:local="clr-namespace:TMDB.ViewModels"
+             xmlns:converter="clr-namespace:TMDB.Converters"
              Title="DetailViewPage">
     <ScrollView BackgroundColor="{StaticResource DetailViewBackground}">
         <StackLayout Orientation="Vertical">
-            <Image Source="https://image.tmdb.org/t/p/w780/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg" Aspect="AspectFill"/>
-            <Label Text="The Witcher (2019)" Style="{StaticResource DetailViewTitle}"/>
+            <Image Source="{Binding Movie.BackdropPath, Converter={converter:ImagePathConverter}, ConverterParameter=w780}" Aspect="AspectFill"/>
+            <Label Text="{Binding Movie.Title}" Style="{StaticResource DetailViewTitle}"/>
             <Grid HorizontalOptions="Fill">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -32,14 +34,14 @@
                     <Label Text="A" Style="{StaticResource SensorText}"/>
                 </Border>
 
-                <Label Text="Drama, Action  Adventure, sci-Fi Fantasy" Style="{StaticResource GenreLabel}"/>
+                <Label Text="{Binding Movie.Genres}" Style="{StaticResource GenreLabel}"/>
             </StackLayout>
 
             <StackLayout Style="{StaticResource OverviewSection}">
-                <Label Text="Destiny is a Beast" Style="{StaticResource Keyinfo}"/>
+                <Label Text="{Binding Movie.Tagline}" Style="{StaticResource Keyinfo}"/>
 
                 <Label Text="Overview" Style="{StaticResource OverviewTitle}"/>
-                <Label Text="Follows the personal and professional lives of a group of doctors at Seattle’s Grey Sloan Memorial Hospital"
+                <Label Text="{Binding Movie.Overview}"
                        Style="{StaticResource OverviewDescription}"/>
 
                 <Label Text="Lauren" Style="{StaticResource CreatorName}"/>
@@ -50,12 +52,21 @@
             <StackLayout Style="{StaticResource CastSection}">
                 <Label Text="Series" Style="{StaticResource CastTitle}"/>
 
-                <CarouselView>
+                <CarouselView ItemsSource="{Binding Movie.Credits.Cast}" Margin="0,10" PeekAreaInsets="0,0,30,0" >
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                    </CarouselView.ItemsLayout>
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout>
-                                <Image Source=""/>
-                            </StackLayout>
+                            <Border Stroke="{StaticResource Gray100}"
+                                    StrokeShape="RoundRectangle 5" WidthRequest="150">
+                                <Grid RowDefinitions="120,Auto,Auto,Auto" ColumnDefinitions="150" HorizontalOptions="CenterAndExpand">
+                                    <Image Grid.Row="0" Grid.Column="0" Source="{Binding ProfilePath, Converter={converter:ImagePathConverter}, ConverterParameter=w185}" Style="{StaticResource ActorImage}"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Name}" MaxLines="2" Style="{StaticResource ActorTitle}"/>
+                                    <Label Grid.Row="2" Grid.Column="0" Text="{Binding KnownForDepartment}" Style="{StaticResource ActorDescription}"/>
+                                    <Label Grid.Row="3" Grid.Column="0" Text="24 Episodes" Style="{StaticResource EpisodesLabel}"/>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>

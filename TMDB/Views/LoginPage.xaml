@@ -4,9 +4,6 @@
              x:Class="TMDB.Views.LoginPage"
              xmlns:vm="clr-namespace:TMDB.ViewModels"
              Title="LoginPage">
-    <ContentPage.BindingContext>
-        <vm:LoginViewModel/>
-    </ContentPage.BindingContext>
     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <Entry Placeholder="Username" Text="{Binding Username}"/>
         <Entry Placeholder="Password" Text="{Binding Password}"/>
