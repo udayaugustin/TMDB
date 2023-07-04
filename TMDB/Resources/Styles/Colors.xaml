@@ -41,5 +41,8 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
     <Color x:Key="TabBarBackground">#304a61</Color>
+    <Color x:Key="DetailViewBackground">#202020</Color>
+    <Color x:Key="GenreBackground">#1c1c1c</Color>
+    <Color x:Key="SensorRatingBoxBorder">#787878</Color>
 
 </ResourceDictionary>

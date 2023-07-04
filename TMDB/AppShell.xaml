@@ -6,13 +6,14 @@
     xmlns:local="clr-namespace:TMDB.Views"
     Shell.FlyoutBehavior="Disabled">
 
+    <ShellContent ContentTemplate="{DataTemplate local:DetailViewPage}" Route="detailview"/>
     <ShellContent
         Title="Login"
         ContentTemplate="{DataTemplate local:LoginPage}"
         Route="Login" />
     
     <ShellContent ContentTemplate="{DataTemplate local:DashboardPage}" Route="dashboard"/>
-    <ShellContent ContentTemplate="{DataTemplate local:DetailViewPage}" Route="detailview"/>
+    
     <TabBar>
         <Tab Title="" Icon="{FontImage FontFamily=FA , Glyph=&#xf004;}" Route="popular">
             <ShellContent ContentTemplate="{DataTemplate local:DashboardPage}"/>
