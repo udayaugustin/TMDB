@@ -13,22 +13,6 @@
         </Grid.RowDefinitions>
 
         <cv:PopularView ItemsSource="{Binding Movies}" SelectionCommand="{Binding NavigateToDetailCommand}" Grid.Row="0"/>
-
-
-        <!--<Grid Grid.Row="1" BackgroundColor="{StaticResource TabBarBackground}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            <StackLayout Grid.Column="0">
-                <Button Text="&#xf03a;" Style="{StaticResource TabButton}" Clicked="Button_Clicked"/>
-            </StackLayout>
-            <StackLayout Grid.Column="1">
-                <Button Text="&#xf005;" Style="{StaticResource TabButton}" Clicked="Button_Clicked"/>
-            </StackLayout>
-        </Grid>-->
-
         <cv:CustomTabView Grid.Row="1" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}"/>
     </Grid>
 </ContentPage>

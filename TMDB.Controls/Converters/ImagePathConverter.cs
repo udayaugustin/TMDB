@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace TMDB.Converters
+namespace TMDB.Controls.Converters
 {
     public class ImagePathConverter : IValueConverter
     {

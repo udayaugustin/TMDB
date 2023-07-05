@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TMDB.Views.DetailViewPage"
              xmlns:local="clr-namespace:TMDB.ViewModels"
-             xmlns:converter="clr-namespace:TMDB.Converters;assembly=TMDB.Controls"
+             xmlns:converter="clr-namespace:TMDB.Controls.Converters;assembly=TMDB.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:loc="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
              Title="DetailViewPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter"/>
+            <converter:GenreToStringConverter x:Key="GenreConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ScrollView BackgroundColor="{StaticResource DetailViewBackground}">
         <StackLayout Orientation="Vertical">
             <Image Source="{Binding Movie.BackdropPath, Converter={converter:ImagePathConverter}, ConverterParameter=w780}" Aspect="AspectFill"/>
@@ -35,7 +42,7 @@
                     <Label Text="A" Style="{StaticResource SensorText}"/>
                 </Border>
 
-                <Label Text="{Binding Movie.Genres}" Style="{StaticResource GenreLabel}"/>
+                <Label Text="{Binding Movie.Genres, Converter={StaticResource GenreConverter}}" Style="{StaticResource GenreLabel}"/>
             </StackLayout>
 
             <StackLayout Style="{StaticResource OverviewSection}">
