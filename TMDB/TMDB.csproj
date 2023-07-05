@@ -61,12 +61,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="CustomViews\CustomTabView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="CustomViews\PopularView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <ProjectReference Include="..\TMDB.Controls\TMDB.Controls.csproj" />
+	  <ProjectReference Include="..\TMDB.Domain\TMDB.Domain.csproj" />
+	  <ProjectReference Include="..\TMDB.Services\TMDB.Services.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\DashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

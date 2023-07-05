@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using TMDB.CustomViews;
-using TMDB.Helpers;
+using TMDB.Domain.Constants;
 using TMDB.Interfaces;
 using TMDB.Models;
 

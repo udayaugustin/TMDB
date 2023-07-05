@@ -1,20 +1,21 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
-using TMDB.Helpers;
 using TMDB.Interfaces;
+using TMDB.Services.Handlers;
 
 namespace TMDB.Services
 {
     public class RestClientService : IHttpClient
     {        
         private readonly HttpClient httpClient;
+        private readonly AuthenticationHandler authenticationHandler;
 
         public RestClientService()
-        {
-            var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDBjMzhhNjc1YWM2ZTUyOGYzMDJkYTAwNjRmOTFhNiIsInN1YiI6IjY0OWZiN2Q2OGMwYTQ4MDEwMTc2MTQwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m3Zz6V4ic6HKrPQ0fSahJGKapnT4tfCJmgKyetQwWjU";
+        {            
             HttpClientHandler httpClientHandler = new HttpClientHandler();
+            authenticationHandler = new AuthenticationHandler(httpClientHandler);
 
-            httpClient = new HttpClient(new AuthenticationHandler(httpClientHandler, token));            
+            httpClient = new HttpClient(authenticationHandler);
         }
 
         public async Task<T> GetAsync<T>(string url)
@@ -57,6 +58,11 @@ namespace TMDB.Services
         {
             HttpResponseMessage response = await httpClient.DeleteAsync(url);
             response.EnsureSuccessStatusCode(); // Throws an exception if the response is not successful
+        }
+
+        public void UpdateSessionId(string sessionId)
+        {
+            authenticationHandler.SessionId = sessionId;
         }
     }
 }

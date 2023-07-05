@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using TMDB.Helpers;
+using TMDB.Domain.Constants;
 using TMDB.Interfaces;
 using TMDB.Models;
 

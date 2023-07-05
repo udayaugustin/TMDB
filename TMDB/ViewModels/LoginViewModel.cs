@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using TMDB.Domain.Constants;
 using TMDB.Helpers;
 using TMDB.Interfaces;
 using TMDB.Models;
+using TMDB.Services;
 
 namespace TMDB.ViewModels
 {
@@ -37,7 +39,10 @@ namespace TMDB.ViewModels
             var sessionEndPoint = $"{Constants.BaseUrl}/authentication/session/new?request_token={validateLogin.RequestToken}";
             var session = await httpClient.GetAsync<LoginSession>(sessionEndPoint);
 
-            await SecureStorage.SetAsync("SessionId", session.SessionId);
+            var sessionHelper = new SessionHelper();
+            await sessionHelper.SetSessionId(session.SessionId);
+
+            httpClient.UpdateSessionId(session.SessionId);
 
             await Shell.Current.GoToAsync("///dashboard");
         }

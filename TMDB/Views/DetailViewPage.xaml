@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TMDB.Views.DetailViewPage"
              xmlns:local="clr-namespace:TMDB.ViewModels"
-             xmlns:converter="clr-namespace:TMDB.Converters"
+             xmlns:converter="clr-namespace:TMDB.Converters;assembly=TMDB.Controls"
              Title="DetailViewPage">
     <ScrollView BackgroundColor="{StaticResource DetailViewBackground}">
         <StackLayout Orientation="Vertical">
