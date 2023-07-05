@@ -42,9 +42,9 @@ public static class MauiProgram
 
 	public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
 	{
-		mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
-        mauiAppBuilder.Services.AddSingleton<DetailPageViewModel>();
-        mauiAppBuilder.Services.AddSingleton<DashboardPageViewModel>();
+		mauiAppBuilder.Services.AddTransient<LoginViewModel>();
+        mauiAppBuilder.Services.AddTransient<DetailPageViewModel>();
+        mauiAppBuilder.Services.AddTransient<DashboardPageViewModel>();
 
         return mauiAppBuilder;
 	}
