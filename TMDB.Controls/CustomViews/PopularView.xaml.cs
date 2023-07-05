@@ -37,5 +37,5 @@ public partial class PopularView : ContentView
     private static void OnSelectionCommandChanged(BindableObject bindable, object oldValue, object newValue)
     {
         (bindable as PopularView).collectionView.SelectionChangedCommand = newValue as ICommand;
-    }
+    }    
 }

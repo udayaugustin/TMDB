@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TMDB.ViewModels
+﻿namespace TMDB.ViewModels
 {
     public class BaseViewModel
     {
+        private bool isInitialized;
+
         public BaseViewModel() { }
 
         public virtual void OnPageAppearing()
+        {
+            if (!isInitialized)
+            {
+                Initialize();
+                isInitialized = true;
+            }                
+        }
+
+        public virtual void Initialize()
         {
 
         }

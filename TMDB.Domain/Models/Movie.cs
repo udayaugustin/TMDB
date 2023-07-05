@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace TMDB.Models
 {
@@ -18,7 +20,7 @@ namespace TMDB.Models
         public int TotalResults { get; set; }
     }
 
-    public class Movie
+    public partial class Movie : ObservableObject
     {
         [JsonProperty("adult")]
         public bool Adult { get; set; }
@@ -102,7 +104,9 @@ namespace TMDB.Models
         public Credits Credits { get; set; }
 
         public string GenreNames { get; set; }
-        public bool IsFavorite { get; set; }
+
+        [ObservableProperty]
+        bool isFavorite;        
     }
 
     public class BelongsToCollection

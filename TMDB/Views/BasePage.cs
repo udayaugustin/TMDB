@@ -5,8 +5,8 @@ namespace TMDB.Views;
 public class BasePage : ContentPage
 {
 	public BasePage()
-	{		
-	}
+	{        
+    }
 
     protected override void OnAppearing()
     {
@@ -17,5 +17,5 @@ public class BasePage : ContentPage
         {
             viewmodel.OnPageAppearing();
         }
-    }
+    }    
 }

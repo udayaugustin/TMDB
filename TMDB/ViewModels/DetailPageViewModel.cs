@@ -27,6 +27,7 @@ namespace TMDB.ViewModels
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             var movieId = (int)query["movieId"];
+            IsFavorite = (bool)query["isFavorite"];
             GetPopularMovies(movieId);
         }
 
