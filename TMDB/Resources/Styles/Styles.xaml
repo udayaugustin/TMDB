@@ -456,6 +456,10 @@
         <Setter Property="Margin" Value="0,20"/>
     </Style>
 
+    <Style TargetType="Label" x:Key="VotePercentage" BasedOn="{StaticResource UserScore}">
+        <Setter Property="VerticalOptions" Value="Center"/>
+    </Style>
+
     <Style TargetType="Label" x:Key="PlayMovie" BasedOn="{StaticResource UserScore}">
         <Setter Property="FontAttributes" Value="None"/>
     </Style>
@@ -554,5 +558,31 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="Margin" Value="0,0,0,30"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="PlayButton">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="FA"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="Margin" Value="0,0,10,0"/>
+    </Style>
+
+    <Style x:Key="FavoriteButtonStyle" TargetType="Button">
+        <Setter Property="Text" Value="&#xf004;" />
+        <Setter Property="FontFamily" Value="FA" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="20,-50,20,0" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="ListViewFavoriteIcon">
+        <Setter Property="FontFamily" Value="FA" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+        <Setter Property="Margin" Value="0,0,20,0" />
     </Style>
 </ResourceDictionary>

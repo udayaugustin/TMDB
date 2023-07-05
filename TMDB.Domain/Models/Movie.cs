@@ -102,6 +102,7 @@ namespace TMDB.Models
         public Credits Credits { get; set; }
 
         public string GenreNames { get; set; }
+        public bool IsFavorite { get; set; }
     }
 
     public class BelongsToCollection
@@ -155,7 +156,7 @@ namespace TMDB.Models
         public string CreditId { get; set; }
 
         [JsonProperty("order")]
-        public int Order { get; set; }
+        public int Order { get; set; }        
     }
 
     public class Credits

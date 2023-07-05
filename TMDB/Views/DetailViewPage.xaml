@@ -16,7 +16,19 @@
     <ScrollView BackgroundColor="{StaticResource DetailViewBackground}">
         <StackLayout Orientation="Vertical">
             <Image Source="{Binding Movie.BackdropPath, Converter={converter:ImagePathConverter}, ConverterParameter=w780}" Aspect="AspectFill"/>
-            <Label Text="{Binding Movie.Title}" Style="{StaticResource DetailViewTitle}"/>
+            <Button Style="{StaticResource FavoriteButtonStyle}" 
+                    Command="{Binding AddToFavoriteCommand}" CommandParameter="{Binding Movie.Id}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsFavorite}" Value="True">
+                        <Setter Property="TextColor" Value="Red" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsFavorite}" Value="False">
+                        <Setter Property="TextColor" Value="{StaticResource White}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Label Text="{Binding Movie.Title}" Style="{StaticResource DetailViewTitle}" HorizontalOptions="CenterAndExpand"/>
+
             <Grid HorizontalOptions="Fill">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -26,13 +38,15 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center">
+                <StackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="{Binding Movie.VoteAverage, StringFormat='{0:F1}%'}" Style="{StaticResource VotePercentage}" Margin="0,0,10,0"/>
                     <Label Text="{loc:Translate UserScore}" TextColor="White" Style="{StaticResource UserScore}"/>
                 </StackLayout>
 
                 <BoxView Grid.Row="0" Grid.Column="1" Style="{StaticResource VerticalLine}"></BoxView>
 
-                <StackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center">
+                <StackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="&#xf04b;" Style="{StaticResource PlayButton}"/>
                     <Label Text="{loc:Translate PlayMovie}" Style="{StaticResource PlayMovie}"/>
                 </StackLayout>
             </Grid>

@@ -6,6 +6,7 @@ using TMDB.Domain.Interfaces;
 using TMDB.Domain.Models;
 using TMDB.Helpers;
 using TMDB.Interfaces;
+using TMDB.Views;
 
 namespace TMDB.ViewModels
 {
@@ -51,7 +52,7 @@ namespace TMDB.ViewModels
                 return;
             }
 
-            await Shell.Current.GoToAsync("///dashboard");                        
+            await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}"); 
         }
 
         [RelayCommand]

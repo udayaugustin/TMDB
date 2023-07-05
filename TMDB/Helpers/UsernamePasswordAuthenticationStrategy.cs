@@ -1,5 +1,6 @@
 ﻿using TMDB.Domain.Constants;
 using TMDB.Domain.Interfaces;
+using TMDB.Domain.Models;
 using TMDB.Interfaces;
 using TMDB.Models;
 
@@ -32,9 +33,12 @@ namespace TMDB.Helpers
                 var session = await httpClient.GetAsync<LoginSession>(sessionEndPoint);
 
                 var sessionHelper = new SessionHelper();
-                await sessionHelper.SetSessionId(session.SessionId);
+                await sessionHelper.SetSessionId(session.SessionId);                
 
                 httpClient.UpdateToken(session.SessionId);
+
+                var accountResponse = await httpClient.GetAsync<Account>($"{Constants.BaseUrl}/account?session_id={session.SessionId}");
+                await sessionHelper.SetAccountId(accountResponse.Id.ToString());
 
                 return session;
             }

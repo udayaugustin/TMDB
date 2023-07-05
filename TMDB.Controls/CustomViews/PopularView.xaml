@@ -19,11 +19,12 @@
                         StrokeThickness="0"
                         StrokeShape="RoundRectangle 10"
                         Margin="0,0,0,10">
-                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10"
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10"
                         BackgroundColor="{StaticResource TabBarBackground}">
                         <Image Source="{Binding PosterPath, Converter={StaticResource ImagePathConverter}, ConverterParameter=w92}" HeightRequest="60" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
 
                         <Label Text="{Binding Title}" Style="{StaticResource ListTitle}" Grid.Row="0" Grid.Column="1"/>
+                        <Label Text="&#xf004;" Grid.Row="0" Grid.Column="2" IsVisible="{Binding IsFavorite}" Style="{StaticResource ListViewFavoriteIcon}"/>
                         <Label Text="{Binding GenreNames}" Style="{StaticResource ListDescription}" Grid.Row="1" Grid.Column="1"/>
                     </Grid>
                 </Border>

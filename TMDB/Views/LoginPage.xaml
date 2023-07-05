@@ -4,8 +4,7 @@
              x:Class="TMDB.Views.LoginPage"
              xmlns:vm="clr-namespace:TMDB.ViewModels"
              xmlns:loc="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:local="clr-namespace:TMDB.Controls.CustomViews;assembly=TMDB.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"             
              Title="LoginPage">
     <StackLayout Style="{StaticResource LoginFormWrapper}">
         <Entry Placeholder="{loc:Translate Username}" Text="{Binding Username}"/>
