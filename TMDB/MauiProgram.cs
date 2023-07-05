@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Markup;
+using LocalizationResourceManager.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using TMDB.Interfaces;
+using TMDB.Resources;
 using TMDB.Services;
 using TMDB.ViewModels;
 
@@ -18,7 +20,12 @@ public static class MauiProgram
 			.UseMauiCommunityToolkit()
 			.UseMauiCommunityToolkitMarkup()
 			.RegisterViewModels()
-			.RegisterServices()			
+			.RegisterServices()
+			.UseLocalizationResourceManager(settings =>
+			{
+				settings.RestoreLatestCulture(true);
+				settings.AddResource(AppResources.ResourceManager);
+			})
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -44,7 +51,7 @@ public static class MauiProgram
 
     public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
     {
-		mauiAppBuilder.Services.AddSingleton<IHttpClient, RestClientService>();
+		mauiAppBuilder.Services.AddSingleton<IHttpClient, HttpClientService>();		
 
         return mauiAppBuilder;
     }

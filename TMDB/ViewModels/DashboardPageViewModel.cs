@@ -37,8 +37,8 @@ namespace TMDB.ViewModels
         {
             Tabs = new ObservableCollection<TabViewItem>
             {
-                new TabViewItem { Title = "Popular", Command = new Command(ShowPopularList)},
-                new TabViewItem { Title = "Trending", Command = new Command(ShowTrendingList)},
+                new TabViewItem { Title = "\uf004", Command = new Command(ShowPopularList)},
+                new TabViewItem { Title = "\uf005", Command = new Command(ShowTrendingList)},
             };
 
             await GetGenres();

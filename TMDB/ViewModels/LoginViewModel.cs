@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LocalizationResourceManager.Maui;
 using TMDB.Domain.Enums;
 using TMDB.Domain.Interfaces;
+using TMDB.Domain.Models;
 using TMDB.Helpers;
 using TMDB.Interfaces;
 
@@ -10,7 +12,7 @@ namespace TMDB.ViewModels
     public partial class LoginViewModel : ObservableObject
     {
         private readonly IHttpClient httpClient;
-
+        private readonly ILocalizationResourceManager localizationResourceManager;
         [ObservableProperty]
         string username;
 
@@ -20,9 +22,21 @@ namespace TMDB.ViewModels
         [ObservableProperty]
         bool isLoginError;
 
-        public LoginViewModel(IHttpClient httpClient)
+        [ObservableProperty]
+        List<Language> languages;
+
+        public LoginViewModel(IHttpClient httpClient, ILocalizationResourceManager localizationResourceManager)
         {
-            this.httpClient = httpClient;            
+            this.httpClient = httpClient;
+            this.localizationResourceManager = localizationResourceManager;
+            Username = "udayaugustin";
+            Password = "Admin2011!@";
+
+            Languages = new List<Language>
+            {
+                new Language {Code = "en-US", Name = "English"},
+                new Language {Code = "hi", Name = "Hindi"}
+            };
         }
 
         [RelayCommand]
@@ -38,6 +52,16 @@ namespace TMDB.ViewModels
             }
 
             await Shell.Current.GoToAsync("///dashboard");                        
+        }
+
+        [RelayCommand]
+        public void LanguageSelected(int index)
+        {
+            var language = Languages[index];
+            if(language != null)
+            {
+                localizationResourceManager.CurrentCulture = new System.Globalization.CultureInfo(language.Code);
+            }                       
         }
 
         private IAuthenticationStrategy GetAuthenticationStrategy(LoginType loginType)

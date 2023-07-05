@@ -34,7 +34,7 @@ namespace TMDB.Helpers
                 var sessionHelper = new SessionHelper();
                 await sessionHelper.SetSessionId(session.SessionId);
 
-                httpClient.UpdateSessionId(session.SessionId);
+                httpClient.UpdateToken(session.SessionId);
 
                 return session;
             }

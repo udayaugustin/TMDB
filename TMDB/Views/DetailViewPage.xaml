@@ -4,6 +4,7 @@
              x:Class="TMDB.Views.DetailViewPage"
              xmlns:local="clr-namespace:TMDB.ViewModels"
              xmlns:converter="clr-namespace:TMDB.Converters;assembly=TMDB.Controls"
+             xmlns:loc="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
              Title="DetailViewPage">
     <ScrollView BackgroundColor="{StaticResource DetailViewBackground}">
         <StackLayout Orientation="Vertical">
@@ -19,13 +20,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center">
-                    <Label Text="User Score" TextColor="White" Style="{StaticResource UserScore}"/>
+                    <Label Text="{loc:Translate UserScore}" TextColor="White" Style="{StaticResource UserScore}"/>
                 </StackLayout>
 
                 <BoxView Grid.Row="0" Grid.Column="1" Style="{StaticResource VerticalLine}"></BoxView>
 
                 <StackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center">
-                    <Label Text="Play Movie" Style="{StaticResource PlayMovie}"/>
+                    <Label Text="{loc:Translate PlayMovie}" Style="{StaticResource PlayMovie}"/>
                 </StackLayout>
             </Grid>
 
@@ -40,13 +41,13 @@
             <StackLayout Style="{StaticResource OverviewSection}">
                 <Label Text="{Binding Movie.Tagline}" Style="{StaticResource Keyinfo}"/>
 
-                <Label Text="Overview" Style="{StaticResource OverviewTitle}"/>
+                <Label Text="{loc:Translate Overview}" Style="{StaticResource OverviewTitle}"/>
                 <Label Text="{Binding Movie.Overview}"
                        Style="{StaticResource OverviewDescription}"/>
 
                 <Label Text="Lauren" Style="{StaticResource CreatorName}"/>
                 <Label Text="Hissrich" Style="{StaticResource CreatorName}"/>
-                <Label Text="Creator" Style="{StaticResource CreatorLabel}"/>
+                <Label Text="{loc:Translate Creator}" Style="{StaticResource CreatorLabel}"/>
             </StackLayout>
 
             <StackLayout Style="{StaticResource CastSection}">

@@ -5,6 +5,11 @@ namespace TMDB.CustomViews;
 
 public partial class CustomTabView : ContentView
 {
+    private Color TabbarBackgroundColor = Color.Parse("#374e63");
+    private Color TabbarSelectedBackgroundColor = Color.Parse("#23394d");
+    private Color TabItemTextColor = Color.Parse("#fff");
+    private Color BorderColor = Color.Parse("#E1E1E1");
+
     public static readonly BindableProperty ItemsSourceProperty =
            BindableProperty.Create(nameof(ItemsSource), typeof(ObservableCollection<TabViewItem>), typeof(CustomTabView), null,
                propertyChanged: OnItemsSourceChanged);
@@ -73,11 +78,12 @@ public partial class CustomTabView : ContentView
                 var tabButton = new Button
                 {
                     Text = item.Title,
-                    FontSize = 16,
-                    TextColor = Color.Parse("#fff"),
-                    BackgroundColor = Color.Parse("#304a61"),
-                    BorderColor = Color.Parse("#fff"),
-                    BorderWidth = 1,
+                    FontSize = 20,
+                    FontFamily = "FA",
+                    TextColor = TabItemTextColor,
+                    BackgroundColor = TabbarBackgroundColor,
+                    BorderColor = BorderColor,
+                    BorderWidth = 0,
                     CornerRadius=0,
                     Padding = new Thickness(10),
                     HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -102,7 +108,7 @@ public partial class CustomTabView : ContentView
         foreach (var child in ((StackLayout)Content).Children)
         {
             var tabButton = (Button)child;
-            tabButton.BackgroundColor = (tabButton.Text == selectedTab.Title) ? Color.Parse("#ff0000") : Color.Parse("#304a61");
+            tabButton.BackgroundColor = (tabButton.Text == selectedTab.Title) ? TabbarSelectedBackgroundColor : TabbarBackgroundColor;
         }
     }
 }

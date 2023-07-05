@@ -5,12 +5,12 @@ using TMDB.Services.Handlers;
 
 namespace TMDB.Services
 {
-    public class RestClientService : IHttpClient
+    public class HttpClientService : IHttpClient
     {        
         private readonly HttpClient httpClient;
         private readonly AuthenticationHandler authenticationHandler;
 
-        public RestClientService()
+        public HttpClientService()
         {            
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             authenticationHandler = new AuthenticationHandler(httpClientHandler);
@@ -60,9 +60,9 @@ namespace TMDB.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public void UpdateSessionId(string sessionId)
+        public void UpdateToken(string token)
         {
-            authenticationHandler.SessionId = sessionId;
+            authenticationHandler.SessionId = token;
         }
     }
 }

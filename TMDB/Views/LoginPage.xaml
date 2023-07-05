@@ -3,12 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TMDB.Views.LoginPage"
              xmlns:vm="clr-namespace:TMDB.ViewModels"
+             xmlns:loc="clr-namespace:LocalizationResourceManager.Maui;assembly=LocalizationResourceManager.Maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="LoginPage">
     <StackLayout Style="{StaticResource LoginFormWrapper}">
-        <Entry Placeholder="Username" Text="{Binding Username}"/>
-        <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}"/>
-        <Button Text="Login" Command="{Binding LoginCommand}"/>
-        <Label Text="Please check your credentials." IsVisible="{Binding IsLoginError}"
+        <Entry Placeholder="{loc:Translate Username}" Text="{Binding Username}"/>
+        <Entry Placeholder="{loc:Translate Password}" IsPassword="True" Text="{Binding Password}"/>
+        <Button Text="{loc:Translate Login}" Command="{Binding LoginCommand}"/>
+        <Label Text="{loc:Translate LoginErrorMessage}" IsVisible="{Binding IsLoginError}"
                TextColor="Red" HorizontalOptions="Center"/>
+        <Picker x:Name="languagePicker" Title="{loc:Translate SelectLanguage}" ItemsSource="{Binding Languages}"
+                ItemDisplayBinding="{Binding Name}">
+            <Picker.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                        Command="{Binding LanguageSelectedCommand}"
+                        CommandParameter="{Binding Source={x:Reference languagePicker}, Path=SelectedIndex}" />
+            </Picker.Behaviors>
+        </Picker>
+
     </StackLayout>
 </ContentPage>
