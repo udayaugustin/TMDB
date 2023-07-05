@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using TMDB.Domain.Constants;
+using TMDB.Domain.Enums;
+using TMDB.Domain.Interfaces;
 using TMDB.Helpers;
 using TMDB.Interfaces;
-using TMDB.Models;
-using TMDB.Services;
 
 namespace TMDB.ViewModels
 {
@@ -18,6 +17,9 @@ namespace TMDB.ViewModels
         [ObservableProperty]
         string password;
 
+        [ObservableProperty]
+        bool isLoginError;
+
         public LoginViewModel(IHttpClient httpClient)
         {
             this.httpClient = httpClient;            
@@ -26,25 +28,26 @@ namespace TMDB.ViewModels
         [RelayCommand]
         public async Task Login()
         {
-            var tokenResponse = await httpClient.GetAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/token/new");            
+            var authentication = GetAuthenticationStrategy(LoginType.UsernamePassword);
+            var session = await authentication.AuthenticateAsync(Username, Password);                       
 
-            var body = new ValidateLogin
+            if(!session.Success)
             {
-                Username = Username,
-                Password = Password,
-                RequestToken = tokenResponse.RequestToken
-            };
-            var validateLogin = await httpClient.PostAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/token/validate_with_login", body);
+                IsLoginError = true;
+                return;
+            }
 
-            var sessionEndPoint = $"{Constants.BaseUrl}/authentication/session/new?request_token={validateLogin.RequestToken}";
-            var session = await httpClient.GetAsync<LoginSession>(sessionEndPoint);
+            await Shell.Current.GoToAsync("///dashboard");                        
+        }
 
-            var sessionHelper = new SessionHelper();
-            await sessionHelper.SetSessionId(session.SessionId);
+        private IAuthenticationStrategy GetAuthenticationStrategy(LoginType loginType)
+        {
+            if (loginType == LoginType.UsernamePassword)
+            {
+                return new UsernamePasswordAuthenticationStrategy(httpClient);
+            }
 
-            httpClient.UpdateSessionId(session.SessionId);
-
-            await Shell.Current.GoToAsync("///dashboard");
+            throw new ArgumentException("Invalid login type");
         }
     }
 }
