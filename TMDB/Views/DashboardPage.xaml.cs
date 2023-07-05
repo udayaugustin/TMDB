@@ -5,7 +5,7 @@ using TMDB.ViewModels;
 
 namespace TMDB.Views;
 
-public partial class DashboardPage : ContentPage
+public partial class DashboardPage : BasePage
 {
 	public DashboardPage()
 	{

@@ -8,7 +8,8 @@ using TMDB.Models;
 
 namespace TMDB.ViewModels
 {
-    public partial class DetailPageViewModel : ObservableObject, IQueryAttributable
+    [INotifyPropertyChanged]
+    public partial class DetailPageViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly IHttpClient restClient;        
 
@@ -23,11 +24,17 @@ namespace TMDB.ViewModels
             this.restClient = restClient;            
         }
 
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            var movieId = (int)query["movieId"];
+            GetPopularMovies(movieId);
+        }
+
         private async void GetPopularMovies(int movieId)
         {
             var movie = await restClient.GetAsync<Movie>($"{Constants.BaseUrl}/movie/{movieId}?append_to_response=credits&language=en-US");
             movie.Credits.Cast = movie.Credits.Cast.Take(5).ToList();
-            Movie = movie;
+            this.Movie = movie;
         }
 
         [RelayCommand]
@@ -36,24 +43,20 @@ namespace TMDB.ViewModels
             var sessionHelper = new SessionHelper();
             var accountId = await sessionHelper.GetAccountId();
             var sessionId = await sessionHelper.GetSessionId();
+            
+            var favorite = !IsFavorite;
 
             var body = new FavoriteRequestModel
             {
                 MediaType = "movie",
                 MediaId = movieId,
-                Favorite = !IsFavorite
+                Favorite = favorite
             };
+
             var url = $"{Constants.BaseUrl}/account/{accountId}/favorite?api_key={Constants.ApiKey}&session_id={sessionId}";
             var response = await restClient.PostAsync<FavoriteResponse>(url, body);
             if (response.Success)
-                IsFavorite = body.Favorite;
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            var movieId = (int)query["movieId"];
-
-            GetPopularMovies(movieId);
-        }
+                IsFavorite = favorite;
+        }        
     }
 }

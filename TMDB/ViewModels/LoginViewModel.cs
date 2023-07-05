@@ -10,7 +10,8 @@ using TMDB.Views;
 
 namespace TMDB.ViewModels
 {
-    public partial class LoginViewModel : ObservableObject
+    [INotifyPropertyChanged]
+    public partial class LoginViewModel : BaseViewModel
     {
         private readonly IHttpClient httpClient;
         private readonly ILocalizationResourceManager localizationResourceManager;
@@ -30,6 +31,18 @@ namespace TMDB.ViewModels
         {
             this.httpClient = httpClient;
             this.localizationResourceManager = localizationResourceManager;
+            
+        }
+
+        public override void OnPageAppearing()
+        {
+            base.OnPageAppearing();
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             Username = "udayaugustin";
             Password = "Admin2011!@";
 

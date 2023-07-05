@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<pages:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:cv="clr-namespace:TMDB.CustomViews;assembly=TMDB.Controls"
              x:Class="TMDB.Views.DashboardPage"
              xmlns:vm="clr-namespace:TMDB.ViewModels"
+             xmlns:pages="clr-namespace:TMDB.Views"
              Title="DashboardPage">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,4 +16,4 @@
         <cv:PopularView ItemsSource="{Binding Movies}" SelectionCommand="{Binding NavigateToDetailCommand}" Grid.Row="0"/>
         <cv:CustomTabView Grid.Row="1" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}"/>
     </Grid>
-</ContentPage>
+</pages:BasePage>

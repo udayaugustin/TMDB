@@ -10,7 +10,8 @@ using TMDB.Views;
 
 namespace TMDB.ViewModels
 {
-    public partial class DashboardPageViewModel : ObservableObject, IQueryAttributable
+    [INotifyPropertyChanged]
+    public partial class DashboardPageViewModel : BaseViewModel
     {
         private readonly IHttpClient restClient;
         private Dictionary<int, string> genreMap = new Dictionary<int, string>();
@@ -18,6 +19,7 @@ namespace TMDB.ViewModels
         private IEnumerable<Movie> trendingMovies;
         private MovieListResponse favoriteMovies;
         private List<int> favoritesMovieIds;
+
         [ObservableProperty]
         IEnumerable<Movie> movies;
 
@@ -33,8 +35,14 @@ namespace TMDB.ViewModels
 
         public DashboardPageViewModel(IHttpClient httpClient)
         {
-            this.restClient = httpClient;            
-            Initilaize();            
+            this.restClient = httpClient;              
+        }
+
+        public override async void OnPageAppearing()
+        {
+            base.OnPageAppearing();
+
+            await Initilaize();
         }
 
         private async Task Initilaize()
@@ -44,14 +52,11 @@ namespace TMDB.ViewModels
                 new TabViewItem { Title = "\uf004", Command = new Command(ShowPopularList)},
                 new TabViewItem { Title = "\uf005", Command = new Command(ShowTrendingList)},
             };
-
             await GetFavoriteMovies();
             await GetGenres();
             await GetPopularMovies();
             await GetTrendingMovies();
-            ShowPopularList();
-
-            //SelectedTab = Tabs.FirstOrDefault();
+            ShowPopularList();            
         }
 
         private async Task GetFavoriteMovies()
@@ -67,14 +72,14 @@ namespace TMDB.ViewModels
 
         private void ShowTrendingList()
         {
+            SetFavoriteMovies(trendingMovies);
             Movies = trendingMovies;
             SelectedTab = Tabs.LastOrDefault();
         }
 
         private void ShowPopularList()
         {
-            popularMovies.Where(m => favoritesMovieIds.Contains(m.Id)).ToList()
-                .ForEach(m => m.IsFavorite = true);
+            SetFavoriteMovies(popularMovies);
             Movies = popularMovies;
             SelectedTab = Tabs.FirstOrDefault();            
         }
@@ -91,29 +96,15 @@ namespace TMDB.ViewModels
         {
             var response = await restClient.GetAsync<MovieListResponse>($"{Constants.BaseUrl}/movie/popular");
             popularMovies = response.Results;
-
-            foreach(var movie in popularMovies)
-            {
-                List<string> genresNames = movie.GenreIds.Select(gid => genreMap.GetValueOrDefault(gid))
-                    .ToList();
-
-                movie.GenreNames = string.Join(", ", genresNames);
-            }
+            SetGenreNames(popularMovies);            
         }
 
         private async Task GetTrendingMovies()
         {
             var response = await restClient.GetAsync<MovieListResponse>($"{Constants.BaseUrl}/trending/movie/day");
             trendingMovies = response.Results;
-
-            foreach (var movie in trendingMovies)
-            {
-                List<string> genresNames = movie.GenreIds.Select(gid => genreMap.GetValueOrDefault(gid))
-                    .ToList();
-
-                movie.GenreNames = string.Join(", ", genresNames);
-            }
-        }
+            SetGenreNames(trendingMovies);
+        }        
 
         [RelayCommand]
         public async Task NavigateToDetail(object movie)
@@ -126,9 +117,21 @@ namespace TMDB.ViewModels
             await Shell.Current.GoToAsync(nameof(DetailViewPage), navigationParameter);
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        private void SetFavoriteMovies(IEnumerable<Movie> movies)
         {
-            
+            movies.Where(m => favoritesMovieIds.Contains(m.Id)).ToList()
+                .ForEach(m => m.IsFavorite = true);
+        }
+
+        private void SetGenreNames(IEnumerable<Movie> movieList)
+        {
+            foreach (var movie in movieList)
+            {
+                List<string> genresNames = movie.GenreIds.Select(gid => genreMap.GetValueOrDefault(gid))
+                    .ToList();
+
+                movie.GenreNames = string.Join(", ", genresNames);
+            }
         }
     }
 }
