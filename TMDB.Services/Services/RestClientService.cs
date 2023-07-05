@@ -21,7 +21,7 @@ namespace TMDB.Services
         public async Task<T> GetAsync<T>(string url)
         {
             HttpResponseMessage response = await httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode(); // Throws an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
 
             string content = await response.Content.ReadAsStringAsync();
             T result = JsonConvert.DeserializeObject<T>(content);
@@ -34,7 +34,7 @@ namespace TMDB.Services
             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await httpClient.PostAsync(url, httpContent);
-            response.EnsureSuccessStatusCode(); // Throws an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
 
             string content = await response.Content.ReadAsStringAsync();
             T result = JsonConvert.DeserializeObject<T>(content);
@@ -47,7 +47,7 @@ namespace TMDB.Services
             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await httpClient.PutAsync(url, httpContent);
-            response.EnsureSuccessStatusCode(); // Throws an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
 
             string content = await response.Content.ReadAsStringAsync();
             T result = JsonConvert.DeserializeObject<T>(content);
@@ -57,7 +57,7 @@ namespace TMDB.Services
         public async Task DeleteAsync(string url)
         {
             HttpResponseMessage response = await httpClient.DeleteAsync(url);
-            response.EnsureSuccessStatusCode(); // Throws an exception if the response is not successful
+            response.EnsureSuccessStatusCode();
         }
 
         public void UpdateSessionId(string sessionId)

@@ -30,8 +30,8 @@ namespace TMDB.ViewModels
 
             var body = new ValidateLogin
             {
-                Username = "udayaugustin",
-                Password = "Admin2011!@",
+                Username = Username,
+                Password = Password,
                 RequestToken = tokenResponse.RequestToken
             };
             var validateLogin = await httpClient.PostAsync<TokenResponse>($"{Constants.BaseUrl}/authentication/token/validate_with_login", body);
