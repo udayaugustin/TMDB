@@ -18,7 +18,7 @@ namespace TMDB.ViewModels
         private IEnumerable<Movie> popularMovies;
         private IEnumerable<Movie> trendingMovies;
         private MovieListResponse favoriteMovies;
-        private List<int> favoritesMovieIds;
+        private HashSet<int> favoritesMovieIds;
 
         [ObservableProperty]
         IEnumerable<Movie> movies;
@@ -73,7 +73,7 @@ namespace TMDB.ViewModels
 
             var url = $"https://api.themoviedb.org/3/account/{accountId}/favorite/movies?api_key={Constants.ApiKey}&session_id={sessionId}";
             favoriteMovies = await restClient.GetAsync<MovieListResponse>(url);
-            favoritesMovieIds = favoriteMovies.Results.Select(m => m.Id).ToList();
+            favoritesMovieIds = favoriteMovies.Results.Select(m => m.Id).ToHashSet<int>();
         }
 
         private void ShowTrendingList()
@@ -127,8 +127,7 @@ namespace TMDB.ViewModels
 
         private void SetFavoriteMovies(IEnumerable<Movie> movies)
         {
-            movies.Where(m => favoritesMovieIds.Contains(m.Id)).ToList()
-                .ForEach(m => m.IsFavorite = true);
+            movies.ToList().ForEach(m => m.IsFavorite = favoritesMovieIds.Contains(m.Id));            
         }
 
         private void SetGenreNames(IEnumerable<Movie> movieList)

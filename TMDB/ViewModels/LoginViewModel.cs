@@ -43,9 +43,6 @@ namespace TMDB.ViewModels
 
         private void Initialize()
         {
-            Username = "udayaugustin";
-            Password = "Admin2011!@";
-
             Languages = new List<Language>
             {
                 new Language {Code = "en-US", Name = "English"},
