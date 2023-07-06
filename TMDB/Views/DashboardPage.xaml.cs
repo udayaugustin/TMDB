@@ -10,10 +10,5 @@ public partial class DashboardPage : BasePage
 	public DashboardPage()
 	{
 		InitializeComponent();        
-    }
-
-    private async void Button_Clicked(object sender, EventArgs e)
-    {
-        //await lazyView.LoadViewAsync();
     }    
 }
