@@ -6,7 +6,8 @@
              x:Class="TMDB.Views.DashboardPage"
              xmlns:vm="clr-namespace:TMDB.ViewModels"
              xmlns:pages="clr-namespace:TMDB.Views"
-             Title="Dashboard">
+             Title="Dashboard"
+             BindingContext="{Binding DashboardPageViewModel, Source={StaticResource Locator}}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

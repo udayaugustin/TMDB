@@ -9,10 +9,7 @@ public partial class DashboardPage : BasePage
 {
 	public DashboardPage()
 	{
-		InitializeComponent();
-
-        BindingContext = Application.Current.MainPage.Handler.MauiContext.Services
-                .GetService<DashboardPageViewModel>();
+		InitializeComponent();        
     }
 
     private async void Button_Clicked(object sender, EventArgs e)

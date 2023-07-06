@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TMDB.ViewModels;
+﻿using TMDB.ViewModels;
 
 namespace TMDB.Helpers
 {
     public class ViewModelLocator
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public ViewModelLocator(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
+        
+        public ViewModelLocator()
+        {            
         }
 
-        public DetailPageViewModel DetailPageViewModel => _serviceProvider.GetRequiredService<DetailPageViewModel>();
+        public LoginViewModel LoginViewModel => Application.Current.MainPage.Handler.MauiContext.Services
+                .GetService<LoginViewModel>();
+
+        public DashboardPageViewModel DashboardPageViewModel => Application.Current.MainPage.Handler.MauiContext.Services
+                .GetService<DashboardPageViewModel>();
+
+        public DetailPageViewModel DetailPageViewModel => Application.Current.MainPage.Handler.MauiContext.Services
+                .GetService<DetailPageViewModel>();
     }
 
 }
